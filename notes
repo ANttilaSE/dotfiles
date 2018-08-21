@@ -1,0 +1,6 @@
+Sort selected lines - ,s
+Wrap paragraph - Q
+Create new multi-cursor - ctrl+n
+Toggle paste mode - f2
+Search files - ctrl+p
+ctrl+p bindings: https://github.com/kien/ctrlp.vim#once-ctrlp-is-open

@@ -5,3 +5,5 @@ DIR="$( cd "$( dirname "$0" )" && pwd )"
 # vim
 ln -Ts $DIR/vim ~/.vim
 ln -s $DIR/vim/vimrc ~/.vimrc
+
+mkdir $DIR/vim/swap

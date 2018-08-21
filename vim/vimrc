@@ -81,6 +81,10 @@ let g:gitgutter_enabled = 0
 map <F12> :set number!<CR>:GitGutterToggle<CR>
 inoremap <F12> <Esc>:set number!<CR>:GitGutterToggle<CR>i
 
+" Make multi cursors less annoying
+let g:multi_cursor_exit_from_insert_mode = 0
+let g:multi_cursor_exit_from_visual_mode = 0
+
 set ignorecase
 set smartcase
 
@@ -88,3 +92,15 @@ imap <up> <nop>
 imap <down> <nop>
 imap <right> <nop>
 imap <left> <nop>
+
+" Q wraps paragraph
+vmap Q gq
+nmap Q gqap
+
+" Toggle paste mode (no auto indent) with f2
+set pastetoggle=<f2>
+
+set nowrap
+
+" Center cursor vertically
+set scrolloff=999
