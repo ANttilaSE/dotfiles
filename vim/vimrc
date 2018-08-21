@@ -1,0 +1,90 @@
+set title
+set titlestring=VIM:\ %-25.55F\ %a%r%m titlelen=70
+
+" Required for vundle
+set nocompatible
+filetype off
+set shell=/bin/bash
+
+" Automatic Vundle install
+let firstRun=0
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  let firstRun=1
+endif
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#rc()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mxw/vim-jsx'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-fugitive'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ntpeters/vim-better-whitespace'
+
+if firstRun == 1
+  echo "Installing Bundles, please ignore key map error messages"
+  :PluginInstall
+endif
+
+" swapfiles in ~/.vim/swap
+set directory^=$HOME/.vim/swap/
+
+filetype plugin indent on
+
+nnoremap <silent> <Leader>l :nohl<CR>
+vnoremap <Leader>s :sort<CR>
+
+set softtabstop=2 expandtab
+set shiftwidth=2
+
+" Statusline
+" %F - Longer path
+" %r readonly flag
+" %m modified flag
+" %y filetype
+" %c column
+" %l line
+" %L number of lines
+" %P percentage through buffer
+" %= right side
+set statusline=%F%r%m\ %y%=%{fugitive#head()}\ 0x%B\ %c\ %l/%L\ %P
+
+" Highlight all search results
+set hlsearch
+
+" Search while typing
+set incsearch
+
+" UTF-8
+if &modifiable
+    set encoding=utf-8
+    set fileencoding=utf-8
+    set fileencodings=utf-8
+endif
+
+" Hilight current line
+set cursorline
+
+" Yank to system clipboard (PRIMARY)
+set clipboard=unnamed
+
+" Don't require .jsx extension for jsx syntax
+let g:jsx_ext_required = 0
+
+" Hide gitgutter and line numbers and toggle with f12
+let g:gitgutter_enabled = 0
+map <F12> :set number!<CR>:GitGutterToggle<CR>
+inoremap <F12> <Esc>:set number!<CR>:GitGutterToggle<CR>i
+
+set ignorecase
+set smartcase
+
+imap <up> <nop>
+imap <down> <nop>
+imap <right> <nop>
+imap <left> <nop>
