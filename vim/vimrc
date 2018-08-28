@@ -24,7 +24,6 @@ Plugin 'mxw/vim-jsx'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'chriskempson/base16-vim'
 
 if firstRun == 1
@@ -115,5 +114,9 @@ set nowrap
 set scrolloff=999
 
 " Colors
-"let base16colorspace=256
-colorscheme base16-default-dark
+let base16colorspace=256
+colorscheme base16-default-dark 
+
+" Show invisible characters
+set list
+set listchars=tab:│\ ,extends:›,precedes:‹,nbsp:·,trail:·
