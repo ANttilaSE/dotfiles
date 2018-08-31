@@ -40,8 +40,7 @@ filetype plugin indent on
 nnoremap <silent> <Leader>l :nohl<CR>
 vnoremap <Leader>s :sort<CR>
 
-set softtabstop=2 tabstop=2 expandtab
-set shiftwidth=2
+set softtabstop=2 expandtab shiftwidth=2 tabstop=2
 
 " Statusline
 " %F - Longer path
