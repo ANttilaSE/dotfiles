@@ -1,36 +1,31 @@
 set title
 set titlestring=VIM:\ %-25.55F\ %a%r%m titlelen=70
 
-" Required for vundle
-set nocompatible
-filetype off
-set shell=/bin/bash
-
-" Automatic Vundle install
-let firstRun=0
-let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
-if !filereadable(vundle_readme)
-  echo "Installing Vundle.."
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  let firstRun=1
+" Automatic vim-plug install
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !mkdir -p ~/.vim/autoload
+  silent !ln -s ~/.local/share/nvim/site/autoload/plug.vim ~/.vim/autoload/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#rc()
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mxw/vim-jsx'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-
-if firstRun == 1
-  echo "Installing Bundles, please ignore key map error messages"
-  :PluginInstall
-endif
+call plug#begin('~/.local/share/nvim/plugged')
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-commentary'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  Plug 'VundleVim/Vundle.vim'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'mxw/vim-jsx'
+  Plug 'terryma/vim-multiple-cursors'
+  Plug 'tpope/vim-fugitive'
+  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'chriskempson/base16-vim'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'pangloss/vim-javascript'
+  Plug 'tpope/vim-surround'
+call plug#end()
 
 " swapfiles in ~/.vim/swap
 set directory^=$HOME/.vim/swap/
@@ -126,3 +121,33 @@ set wildignore+=*bower_components,node_modules,webroot,tmp
 
 " Activate jsx support for .js files
 let g:jsx_ext_required = 0
+
+" jklö instead of hjkl
+noremap ; l
+noremap ö l
+noremap l k
+noremap k j
+noremap j h
+
+" Arrow keys to resize splits
+map <Up> <C-W>+
+map <Down> <C-W>-
+map <Left> <C-W><
+map <Right> <C-W>>
+
+" ctrl-p to search files with fzf
+nnoremap <c-p> :Files!<cr>
+
+" ,r to search file contents with rg + fzf
+nnoremap <leader>r :Rg!<cr>
+
+" :Files with preview
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('up:70%'), <bang>0)
+
+" :Rg with preview
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('up:70%'),
+  \   <bang>0)
